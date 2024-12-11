@@ -1,52 +1,67 @@
-let producto = "";
-let cantidad = 0;
-let cantidadTotal = 0;
+class Producto {
+    constructor(nombre, precio, cantidad) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = cantidad;
+    }
+
+    calcularPrecioTotal() {
+        return this.precio * this.cantidad;
+    }
+}
+
+alert("Bienvenido a ProGainz");
+
+const listaProductos = [
+    {id: 1, nombre: "Proteina", precio: 500},
+    {id: 2, nombre: "Creatina", precio: 700},
+    {id: 3, nombre: "Gainer", precio: 1000},
+    {id: 4, nombre: "Pre-entreno", precio: 600},
+    {id: 5, nombre: "Vitaminas", precio: 300},
+    {id: 6, nombre: "Shaker", precio: 200}
+]
+
+const productos = [];
+let nombre = "";
 let precio = 0;
 let precioTotal = 0;
+let cantidad = 0;
+let cantidadTotal = 0;
 let seguirComprando = true;
 
-alert("Bienvenido a mi Ecommerce");
-
-function tiendaTecnologica() {
+function tiendaSuplementos() {
     do {
-        producto = prompt("Que producto desea comprar?\n Celular\n Laptop\n TV\n Tablet");
+        nombre = prompt("Que suplemento desea comprar?\n Proteina\n Creatina\n Gainer\n Pre-entreno\n Vitaminas\n Shaker");
+        if (!validarProductos(nombre)) {
+            alert("El producto ingresado no es válido, por favor vuelva a intentarlo");
+            continue;
+        }
+
         cantidad = parseInt(prompt("Que cantidad quiere llevar?"));
+        if (isNaN(cantidad) || cantidad <= 0) {
+            alert("La cantidad ingresada no es válida, por favor vuelva a intentarlo");
+            continue;
+        }
 
-        cantidadCorrecta();
+        const encontrarProducto = listaProductos.find(producto => producto.nombre.toLowerCase() === nombre.toLowerCase())
+        if (encontrarProducto) {
+            precio = encontrarProducto.precio;
+        }
 
-        elegirProductos();
+        let producto = new Producto(nombre, precio, cantidad);
+        productos.push(producto)
 
-        precioTotal += precio * cantidad;
+        precioTotal += producto.calcularPrecioTotal();
+
         cantidadTotal += cantidad;
 
         seguirComprando = confirm("Desea seguir comprando?");
     } while (seguirComprando);
     alert(`Resumen de la compra:\nCantidad de productos: ${cantidadTotal}\nPrecio total: ${precioTotal}`);
 }
-tiendaTecnologica();
 
-function elegirProductos() {
-    switch (producto) {
-        case "Celular":
-            precio = 1500;
-            break;
-        case "Laptop":
-            precio = 4000;
-            break;
-        case "TV":
-            precio = 3000;
-            break;
-        case "Tablet":
-            precio = 2000;
-            break;
-        default:
-            alert("Producto no disponible")
-    }
+function validarProductos() {
+    return listaProductos.some(producto => producto.nombre.toLowerCase() === nombre.toLowerCase());
 }
-
-function cantidadCorrecta() {
-    while (cantidad <= 0 || isNaN(cantidad)) {
-        alert("No se agregaron productos o el formato es incorrecto");
-        cantidad = parseInt(prompt("Que cantidad quiere llevar?"));
-    }
-}
+tiendaSuplementos();
+console.log(productos);
