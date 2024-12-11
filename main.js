@@ -16,7 +16,7 @@ const listaProductos = [
     {id: 1, nombre: "Proteina", precio: 500},
     {id: 2, nombre: "Creatina", precio: 700},
     {id: 3, nombre: "Gainer", precio: 1000},
-    {id: 4, nombre: "Pre-entreno", precio: 600},
+    {id: 4, nombre: "Pre entreno", precio: 600},
     {id: 5, nombre: "Vitaminas", precio: 300},
     {id: 6, nombre: "Shaker", precio: 200}
 ]
